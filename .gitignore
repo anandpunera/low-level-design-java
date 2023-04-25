@@ -1,3 +1,4 @@
-../target/
+/snake-ladder/target/
 .idea
-*.iml
+/snake-ladder/.idea
+/snake-ladder/*.iml
