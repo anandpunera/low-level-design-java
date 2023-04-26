@@ -1,10 +1,7 @@
 package com.lld.vr;
 
 import com.lld.vr.controller.*;
-import com.lld.vr.model.Slot;
-import com.lld.vr.model.User;
-import com.lld.vr.model.Vehicle;
-import com.lld.vr.model.VehicleType;
+import com.lld.vr.model.*;
 import com.lld.vr.strategy.BookingStrategy;
 import com.lld.vr.strategy.DefaultBookingStrategy;
 import org.junit.jupiter.api.BeforeAll;
@@ -79,6 +76,7 @@ public class VehicleRentalTests {
         Slot slot = new Slot(start, end);
         assert bookingController.bookVehicle(user.getId(), VehicleType.Sedan, slot);
         assert user.getBookingList().isEmpty() == false;
-        Optional<List<Vehicle>> optionalVehicleList = bookingController.viewVehicleInventory(slot);
+        Optional<List<Pair<BookingStatus,List<Vehicle>>>> optionalPairs = bookingController.viewVehicleInventory(slot);
+        System.out.println(optionalPairs);
     }
 }
