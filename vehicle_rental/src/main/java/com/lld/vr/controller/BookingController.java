@@ -29,7 +29,7 @@ public class BookingController {
         List<Vehicle> availableVehicles = new ArrayList<>();
         for (String vehicleId: vehicleIds) {
             Vehicle vehicle = vehicleController.getById(vehicleId);
-            if (vehicle.getVehicleType() != vehicleType || vehicle.getBookingStatus() == BookingStatus.BOOKED) {
+            if (vehicle.getVehicleType() != vehicleType) {
                 continue;
             }
             boolean available = true;
@@ -60,7 +60,6 @@ public class BookingController {
                 if(optionalBooking.isPresent()) {
                     Booking booking = optionalBooking.get();
                     bookingsMap.computeIfAbsent(booking.getVehicle().getId(), k -> new ArrayList<>()).add(booking);
-                    booking.getVehicle().setBookingStatus(BookingStatus.BOOKED);
                     userVehiclesMap.put(userId, Arrays.asList(booking.getVehicle().getId()));
                     return true;
                 }
@@ -87,10 +86,10 @@ public class BookingController {
         List<Vehicle> availableVehicles = new ArrayList<>();
         for (String vehicleId: vehicleIds) {
             Vehicle vehicle = vehicleController.getById(vehicleId);
-            if (vehicle.getBookingStatus() == BookingStatus.BOOKED) {
+            List<Booking> bookings = bookingsMap.get(vehicleId);
+            if(null == bookings || bookings.size() == 0) {
                 continue;
             }
-            List<Booking> bookings = bookingsMap.get(vehicleId);
             boolean available = true;
             for(Booking booking : bookings) {
                 if(booking.getSlot().overlaps(slot)) {
@@ -111,18 +110,18 @@ public class BookingController {
         List<Vehicle> availableVehicles = new ArrayList<>();
         for (String vehicleId: vehicleIds) {
             Vehicle vehicle = vehicleController.getById(vehicleId);
-            if (vehicle.getBookingStatus() != BookingStatus.BOOKED) {
+            List<Booking> bookings = bookingsMap.get(vehicleId);
+            if(null == bookings || bookings.size() == 0) {
                 continue;
             }
-            List<Booking> bookings = bookingsMap.get(vehicleId);
-            boolean available = true;
+            boolean booked = false;
             for(Booking booking : bookings) {
                 if(!booking.getSlot().overlaps(slot)) {
-                    available = false;
+                    booked = true;
                     break;
                 }
             }
-            if(available)
+            if(booked)
                 availableVehicles.add(vehicle);
         }
         if(availableVehicles.size() > 0)

@@ -25,7 +25,6 @@ public class VehicleController {
     public Optional<Vehicle> addVehicle(VehicleType vehicleType, String branchName) {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleType(vehicleType);
-        vehicle.setBookingStatus(BookingStatus.AVAILABLE);
         vehicle.setId(UUID.randomUUID().toString());
         vehicleMap.put(vehicle.getId(), vehicle);
         branchController.addVehicleToBranch(vehicle.getId(), vehicleType, branchName);
