@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.lld.snake_ladder.SnakeLadderApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.513 s - in com.lld.snake_ladder.SnakeLadderApplicationTests
