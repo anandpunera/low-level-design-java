@@ -7,5 +7,6 @@ public enum Place {
     Delhi,
     Pune,
     Chennai,
-    Kolkata
+    Kolkata,
+    Mysore
 }
