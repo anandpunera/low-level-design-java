@@ -1,3 +1,8 @@
 ../target/
 .idea
 *.iml
+/tictac/target/
+/rideshare/target/
+/splitwise/target/
+/snake-ladder/target/
+/vehicle-rental/target/
