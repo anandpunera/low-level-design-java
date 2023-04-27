@@ -1,8 +1,10 @@
 package com.lld.rideshare.strategy;
 
+import com.lld.rideshare.controllers.VehicleController;
 import com.lld.rideshare.models.Brand;
 import com.lld.rideshare.models.Place;
 import com.lld.rideshare.models.Ride;
+import com.lld.rideshare.models.Vehicle;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 public class PreferredVehicleSelectionStrategy implements SelectionStrategy {
-    private 
+    private VehicleController vehicleController;
     private Brand preferredBrand;
     private Place origin;
     private Place destination;
@@ -25,7 +27,10 @@ public class PreferredVehicleSelectionStrategy implements SelectionStrategy {
                 p.getDestination().equals(destination)).filter(p -> p.getSeatsAvailable() >= numberOfSeats).collect(Collectors.toList());
 
         for(Ride ride : filteredByOriginAndDestination) {
-            ride.getVehicleId();
+            Optional<Vehicle> vehicleOptional = vehicleController.getVehicleById(ride.getVehicleId());
+            if(vehicleOptional.isPresent() && vehicleOptional.get().getBrand() == preferredBrand) {
+                return Optional.of(ride);
+            }
         }
         return Optional.empty();
     }
