@@ -1,17 +1,16 @@
-package com.lld.clear.dao;
-
+package com.lld.clear.service;
+import com.lld.clear.dao.UserRepo;
 import com.lld.clear.model.User;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
 
-
-public class BalanceRepo {
+public class BalanceService {
 
     private UserRepo userRepo;
 
-    public BalanceRepo(UserRepo userRepo) {
+    public BalanceService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
