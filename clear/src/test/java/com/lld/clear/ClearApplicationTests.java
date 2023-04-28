@@ -74,6 +74,4 @@ public class ClearApplicationTests {
         assert balanceController.getBalances("Anand2").get().get("Anand1").equals(BigDecimal.valueOf(0));
     }
 
-
-
 }
