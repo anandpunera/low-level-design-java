@@ -1,4 +1,4 @@
-package com.lld.clear.controller;
+package com.lld.clear.dao;
 
 import com.lld.clear.dto.ExpenseDto;
 import com.lld.clear.exceptions.ExpenseException;
@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ExpenseController {
+public class ExpenseRepo {
     private Map<String, Expense> expenses = new HashMap<>();
     private ExpenseService expenseService;
 
-    public ExpenseController(ExpenseService expenseService) {
+    public ExpenseRepo(ExpenseService expenseService) {
         this.expenseService = expenseService;
     }
 

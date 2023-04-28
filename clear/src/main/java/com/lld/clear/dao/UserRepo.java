@@ -1,4 +1,4 @@
-package com.lld.clear.controller;
+package com.lld.clear.dao;
 
 import com.lld.clear.dto.AddUserDto;
 import com.lld.clear.exceptions.UserException;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserController {
+public class UserRepo {
     Map<String, User> userMap = new HashMap<>();
 
     public Optional<User> addUser(AddUserDto addUserDto) {
@@ -35,16 +35,16 @@ public class UserController {
         if(null == primary || null == transactedWithUser) {
             throw new UserException(String.format("User with name %s or %s does not Exist", user, transactionUser));
         }
-        BigDecimal bigDecimal = primary.getBalances().get(transactionUser);
-        if(null == bigDecimal) {
-            bigDecimal = BigDecimal.ZERO;
+        BigDecimal currentBalance = primary.getBalances().get(transactionUser);
+        if(null == currentBalance) {
+            currentBalance = BigDecimal.ZERO;
         }
-        primary.getBalances().put(transactionUser, bigDecimal.add(amount));
-        bigDecimal = transactedWithUser.getBalances().get(primary.getName());
-        if(null == bigDecimal) {
-            bigDecimal = BigDecimal.ZERO;
+        primary.getBalances().put(transactionUser, currentBalance.add(amount));
+        currentBalance = transactedWithUser.getBalances().get(primary.getName());
+        if(null == currentBalance) {
+            currentBalance = BigDecimal.ZERO;
         }
-        transactedWithUser.getBalances().put(primary.getName(), bigDecimal.subtract(amount));
+        transactedWithUser.getBalances().put(primary.getName(), currentBalance.subtract(amount));
     }
 
     public void settleBalances(String user, String userToSettleWith) {
